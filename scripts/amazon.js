@@ -1,5 +1,5 @@
-
-product_grid=document.querySelector(".js-product-grid");
+import{cart} from "../data/cart.js"
+const product_grid=document.querySelector(".js-product-grid");
 let productCardsHTML=''
 products.forEach((product)=>{
   const html=`
@@ -63,7 +63,7 @@ addToCartButton.forEach((button,index)=>{
 
   button.addEventListener('click',()=>{
 
-    addToCartMsg=document.querySelectorAll('.added-to-cart')
+    const addToCartMsg=document.querySelectorAll('.added-to-cart')
 
     addToCartMsg[index].style.opacity='1';
 

@@ -18,5 +18,6 @@ export function removeFromCart(productId){
   })
   console.log(newCart)
   cart=newCart
+  document.querySelector(`.js-cart-item-${productId}`).remove()
 
 }

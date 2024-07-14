@@ -1,11 +1,11 @@
-import { cart, removeFromCart, updateDeliveryOption } from "../data/cart.js";
-import { products } from "../data/products.js";
-import { deliveryOptions } from "../data/deliveryOptions.js";
+import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
+import { products } from "../../data/products.js";
+import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { paymentSummary } from "./paymentSummary.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
-
-function pageLoad() {
-  let html=''
+export function pageLoad() {
+  let html = ''
   cart.forEach((product, index) => {
     const productId = product.id;
     let matchingProduct;
@@ -42,9 +42,8 @@ function pageLoad() {
                 </div>
                 <div class="product-quantity">
                   <span>
-                    Quantity: <span class="quantity-label">${
-                      product.quantity
-                    }</span>
+                    Quantity: <span class="quantity-label">${product.quantity
+      }</span>
                   </span>
                   <span class="update-quantity-link link-primary">
                     Update
@@ -66,7 +65,6 @@ function pageLoad() {
     ;
   });
   function updateDeliveryDate(matchingProductId, product) {
-    console.log(product.deliveryOptionId);
     let deliveryOptionsHTML = "";
     deliveryOptions.forEach((deliveryOption, i) => {
       const today = dayjs();
@@ -81,9 +79,8 @@ function pageLoad() {
     <div class="delivery-option js-delivery-option"
     data-product-id="${matchingProductId}"
     data-delivery-option-id="${deliveryOption.deliveryId}">
-     <input type="radio" ${
-       isChecked ? "checked" : ""
-     } class="delivery-option-input"name="delivery-option-${matchingProductId}">
+     <input type="radio" ${isChecked ? "checked" : ""
+        } class="delivery-option-input"name="delivery-option-${matchingProductId}">
     <div>
     <div class="delivery-option-date">
     ${dateString}
@@ -97,14 +94,14 @@ function pageLoad() {
     });
     return deliveryOptionsHTML;
   }
-  //console.log(updateDeliveryDate())
-    document.querySelector(".js-cart-item-grid").innerHTML= html;
+  document.querySelector(".js-cart-item-grid").innerHTML = html;
 
   document.querySelectorAll(".js-delete-cart-item").forEach((link) => {
     link.addEventListener("click", () => {
       const productId = link.dataset.productId;
       removeFromCart(productId);
       pageLoad()
+      paymentSummary()
     });
   });
 
@@ -113,7 +110,7 @@ function pageLoad() {
       const { productId, deliveryOptionId } = optn.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       pageLoad();
+      paymentSummary()
     });
   });
 }
-pageLoad();
